@@ -44,15 +44,15 @@ class DeviceScanner(threading.Thread):
 
             # Replace registered devices with ones that are currently online
             # Remove devices we can't see
-            for r in self._registeredDevices:
-                if r not in _onlineDeviceAddresses:
-                    del self._registeredDevices[r]
-            # Add devices we can (provided there's still space)
             with self.lock:
+                for r in self._registeredDevices:
+                    if r not in _onlineDeviceAddresses:
+                        del self._registeredDevices[r]
+                # Add devices we can (provided there's still space)
                 for n in _onlineDeviceAddresses:
                     if (n not in self._registeredDevices) and (len(self._registeredDevices) < self._deviceLimit):
                         self._registeredDevices[n] = ""
-            
+
         time.sleep(2)
 
     def getDeviceLimit(self):
