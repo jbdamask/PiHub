@@ -1,7 +1,9 @@
 from AWSIoTMQTTShadowClientGenerator import AWSIoTMQTTShadowClientGenerator, ShadowCallbackContainer
 from bluepy.btle import Scanner, DefaultDelegate, Peripheral
 from BluefruitMonitor import BluefruitMonitor
+from BLEDeviceScanner import DeviceScanner
 import time
+import threading
 from AWSIoTNotificationDelegate import AWSIoTNotificationDelegate
 
 
@@ -14,7 +16,9 @@ shadow = AWSIoTMQTTShadowClientGenerator("a2i4zihblrm3ge.iot.us-east-1.amazonaws
                                          False
                                          )
 
-
+deviceScanner = DeviceScanner()
+deviceScanner.start()
+lock = threading.RLock()
 
 blm1 = BluefruitMonitor("E0:F2:72:20:15:43", AWSIoTNotificationDelegate("E0:F2:72:20:15:43", shadow))
 blm1.startMonitor()
