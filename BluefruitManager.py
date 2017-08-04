@@ -45,7 +45,7 @@ class DeviceScanner(threading.Thread):
             # Replace registered devices with ones that are currently online
             # Remove devices we can't see
             with self.lock:
-                for r in self._registeredDevices:
+                for r in self._registeredDevices.keys():
                     if r not in _onlineDeviceAddresses:
                         del self._registeredDevices[r]
                 # Add devices we can (provided there's still space)
