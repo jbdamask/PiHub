@@ -16,9 +16,11 @@ class DeviceScanner(threading.Thread):
     def run(self):
         print "Starting scanner thread"
         while True:
+            print "Scanning..."
             _devices = self.scanner.scan(10.0)
             _onlineDeviceAddresses = {}
             _counter = 0
+            print "Iterating over devices..."
             for d in _devices:
                 # If we're over the limit just stop
                 while _counter < self._deviceLimit:
@@ -27,6 +29,7 @@ class DeviceScanner(threading.Thread):
                         if value == "Adafruit Bluefruit LE":
                             # Check only to avoid unnecessary locking
                             if d.addr not in self._registeredDevices:
+                                print d.addr + " is online!"
                                 _onlineDeviceAddresses[d.addr] = ""
                                 _counter += 1
 
