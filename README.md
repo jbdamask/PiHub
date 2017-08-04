@@ -1,6 +1,10 @@
-# Project Title
+# PiHub
 
-Connecting multiple BLE devices to the same Raspberry Pi hub and communicating via AWS IoT
+Connecting multiple Bluetooth Low Energy (BLE) devices to the same Raspberry Pi and communicating via AWS IoT.
+
+This initial version uses the Pi as a communication hub between local BLE devices; an event on one will produce an effect on another. Each BLE device is a producer and consumer of events, which mean they can all control each other. 
+
+The benefit of using IoT is that multiple Pis can connect over the internet and each Pi can be connected to multiple BLE devices. Effectively, this lets BLE devices control each other without being connected to the internet themselves. 
 
 ## Getting Started
 
