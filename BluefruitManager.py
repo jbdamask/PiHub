@@ -71,13 +71,13 @@ class DeviceScanner(threading.Thread):
                             print r + ", you're on probation bitch! Start time is " + str(t)
                         else:
                             # Between statement needed because upon entry into the list, the time is seconds since the epoch
-                            if t - self._probationDevices[r] > self._waitBeforeUnregisteringDevice:
-                                print r + " has been offline for " + str(t) + " seconds. You're outta here!"
+                            if (t - self._probationDevices[r]) > self._waitBeforeUnregisteringDevice:
+                                print r + " has been offline for " + str(t - self._probationDevices[r]) + " seconds. You're outta here!"
                                 del self._registeredDevices[r]
                                 del self._probationDevices[r]
                             else:
                                 self._probationDevices[r] = t
-                                print "tsk tsk...device " + r + " has been offline for " + str(t) + " seconds..."
+                                print "tsk tsk...device " + r + " has been offline for " + str(t - self._probationDevices[r]) + " seconds..."
                     else:
                         # Back online so let it slide
                         if r in self._probationDevices:
