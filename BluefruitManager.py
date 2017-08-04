@@ -77,7 +77,7 @@ class DeviceScanner(threading.Thread):
                                 del self._probationDevices[r]
                             else:
                                 print "tsk tsk...device " + r + " has been offline for " + str(t - self._probationDevices[r]) + " seconds..."
-                                self._probationDevices[r] = t - self._probationDevices[r]
+                                #self._probationDevices[r] = t - self._probationDevices[r]
                     else:
                         # Back online so let it slide
                         if r in self._probationDevices:
