@@ -65,7 +65,9 @@ class DeviceScanner(threading.Thread):
                 for r in self._registeredDevices.keys():
                     if r not in _onlineDeviceAddresses:
                         if r not in self._probationDevices:
-                            self._probationDevices[r] = int(time.time())
+                            t = int(time.time())
+                            self._probationDevices[r] = t
+                            print r + ", you're on probation bitch! Start time is "
                         else:
                             t = int(time.time()) - self._probationDevices[r]
                             # Between statement needed because upon entry into the list, the time is seconds since the epoch
