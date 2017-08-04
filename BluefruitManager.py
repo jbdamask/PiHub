@@ -9,6 +9,8 @@ class DeviceScanner(threading.Thread):
     _deviceLimit = 8
     _registeredDevices = {}
 
+    lock = threading.RLock()
+
     def __init__(self):
         threading.Thread.__init__(self)
         self.scanner = Scanner(0)
@@ -46,9 +48,11 @@ class DeviceScanner(threading.Thread):
                 if r not in _onlineDeviceAddresses:
                     del self._registeredDevices[r]
             # Add devices we can (provided there's still space)
-            for n in _onlineDeviceAddresses:
-                if (n not in self._registeredDevices) and (len(self._registeredDevices) < self._deviceLimit):
-                    self._registeredDevices[n] = ""
+            with self.lock:
+                for n in _onlineDeviceAddresses:
+                    if (n not in self._registeredDevices) and (len(self._registeredDevices) < self._deviceLimit):
+                        self._registeredDevices[n] = ""
+            
         time.sleep(2)
 
     def getDeviceLimit(self):
