@@ -26,7 +26,6 @@ class DeviceScanner(threading.Thread):
                 # If we're over the limit just stop
                 if _counter < self._deviceLimit:
                     print _counter
-                    _onlineDeviceAddresses[d.addr] = ""
                     for (adtype, desc, value) in d.getScanData():
                         if value == "Adafruit Bluefruit LE":
                             print "Found Bluefruit with address: " + d.addr
