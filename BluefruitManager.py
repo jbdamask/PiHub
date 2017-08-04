@@ -1,5 +1,6 @@
 from bluepy.btle import Scanner, DefaultDelegate, Peripheral
 import threading
+import time
 
 
 class DeviceScanner(threading.Thread):
@@ -24,6 +25,7 @@ class DeviceScanner(threading.Thread):
             for d in _devices:
                 # If we're over the limit just stop
                 while _counter < self._deviceLimit:
+                    print _counter
                     _onlineDeviceAddresses[d.addr] = ""
                     for (adtype, desc, value) in d.getScanData():
                         if value == "Adafruit Bluefruit LE":
@@ -36,6 +38,7 @@ class DeviceScanner(threading.Thread):
 
             # Replace registered devices with ones that are currently online
             self._registeredDevices = _onlineDeviceAddresses
+        time.sleep(2)
 
     def getDeviceLimit(self):
         return self._deviceLimit
