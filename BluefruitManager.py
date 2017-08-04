@@ -53,14 +53,7 @@ class DeviceScanner(threading.Thread):
                 #    print _counter
                 for (adtype, desc, value) in d.getScanData():
                     if value in self._deviceNamesToFind.keys():
-                        print "Found Bluefruit with address: " + d.addr
                         _onlineDeviceAddresses[d.addr] = ""
-                            # Check only to avoid unnecessary locking
-                            #if d.addr not in self._registeredDevices:
-                            #    print d.addr + " is online!"
-                                #_onlineDeviceAddresses[d.addr] = ""
-                                #_counter += 1
-                            #_counter += 1
 
             # Replace registered devices with ones that are currently online
             # Remove devices we can't see
