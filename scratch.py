@@ -14,6 +14,8 @@ shadow = AWSIoTMQTTShadowClientGenerator("a2i4zihblrm3ge.iot.us-east-1.amazonaws
                                          False
                                          )
 
+
+
 blm1 = BluefruitMonitor("E0:F2:72:20:15:43", AWSIoTNotificationDelegate("E0:F2:72:20:15:43", shadow))
 blm1.startMonitor()
 blm2 = BluefruitMonitor("FB:E4:1D:F1:22:96", AWSIoTNotificationDelegate("FB:E4:1D:F1:22:96", shadow))

@@ -26,7 +26,11 @@ class DeviceScanner(threading.Thread):
 
     # Limit the number of ble devices per Pi
     _deviceLimit = 8
+    _waitBeforeUnregisteringDevice = 30
+    # Devices tracked by this class
     _registeredDevices = {}
+    # Devices that are registered but no longer online
+    _probationDevices = {}
     _deviceNamesToFind = { "Adafruit Bluefruit LE": "" }
 
     lock = threading.RLock()
@@ -56,11 +60,27 @@ class DeviceScanner(threading.Thread):
                         _onlineDeviceAddresses[d.addr] = ""
 
             # Replace registered devices with ones that are currently online
-            # Remove devices we can't see
+            # Remove devices we can't see anymore
             with self.lock:
                 for r in self._registeredDevices.keys():
                     if r not in _onlineDeviceAddresses:
-                        del self._registeredDevices[r]
+                        if r not in self._probationDevices:
+                            self._probationDevices[r] = int(time.time())
+                        else:
+                            t = int(time.time()) - self._probationDevices[r]
+                            # Between statement needed because upon entry into the list, the time is seconds since the epoch
+                            if (t > self._waitBeforeUnregisteringDevice) and (t < 1000000):
+                                print r + " has been offline for " + str(t) + " seconds. You're outta here!"
+                                del self._registeredDevices[r]
+                                del self._probationDevices[r]
+                            else:
+                                self._probationDevices[r] = t
+                                print "tsk tsk...device " + r + " has been offline for " + str(t) + " seconds..."
+                    else:
+                        # Back online so let it slide
+                        if r in self._probationDevices:
+                            del self._probationDevices[r]
+
                 # Add devices we can (provided there's still space)
                 for n in _onlineDeviceAddresses:
                     if (n not in self._registeredDevices) and (len(self._registeredDevices) < self._deviceLimit):
