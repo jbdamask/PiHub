@@ -27,6 +27,7 @@ class DeviceScanner(threading.Thread):
                     _onlineDeviceAddresses[d.addr] = ""
                     for (adtype, desc, value) in d.getScanData():
                         if value == "Adafruit Bluefruit LE":
+                            print "Found Bluefruit with address: " + d.addr
                             # Check only to avoid unnecessary locking
                             if d.addr not in self._registeredDevices:
                                 print d.addr + " is online!"
