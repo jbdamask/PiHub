@@ -17,7 +17,7 @@ Todo:
 
 """
 
-from bluepy.btle import Scanner, DefaultDelegate, Peripheral, BTLEException
+from bluepy.btle import Scanner, BTLEException
 import threading
 import time
 
