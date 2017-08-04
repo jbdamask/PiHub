@@ -1,0 +1,7 @@
+*.key
+*.pem
+*.crt
+/AWSIoTPythonSDK
+/bluepy
+.idea
+*.pyc
