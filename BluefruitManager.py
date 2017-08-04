@@ -1,3 +1,22 @@
+# -*- coding: utf-8 -*-
+"""
+Use this class in its own thread to constantly scan for Adafruit devices.
+
+Example:
+    Examples can be given using either the ``Example`` or ``Examples``
+    sections. Sections support any reStructuredText formatting, including
+    literal blocks::
+
+        $ python example_google.py
+
+Section breaks are created by resuming unindented text. Section breaks
+are also implicitly created anytime a new section starts.
+
+Todo:
+    * Externalize device type so we can search for different stuff
+
+"""
+
 from bluepy.btle import Scanner, DefaultDelegate, Peripheral, BTLEException
 import threading
 import time
@@ -8,6 +27,7 @@ class DeviceScanner(threading.Thread):
     # Limit the number of ble devices per Pi
     _deviceLimit = 8
     _registeredDevices = {}
+    _deviceNamesToFind = { "Adafruit Bluefruit LE": "" }
 
     lock = threading.RLock()
 
@@ -32,7 +52,7 @@ class DeviceScanner(threading.Thread):
                 #if _counter < self._deviceLimit:
                 #    print _counter
                 for (adtype, desc, value) in d.getScanData():
-                    if value == "Adafruit Bluefruit LE":
+                    if value in self._deviceNamesToFind.keys():
                         print "Found Bluefruit with address: " + d.addr
                         _onlineDeviceAddresses[d.addr] = ""
                             # Check only to avoid unnecessary locking
