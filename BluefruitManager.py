@@ -1,4 +1,4 @@
-from bluepy.btle import Scanner, DefaultDelegate, Peripheral
+from bluepy.btle import Scanner, DefaultDelegate, Peripheral, BTLEException
 import threading
 import time
 
@@ -18,7 +18,10 @@ class DeviceScanner(threading.Thread):
         print "Starting scanner thread"
         while True:
             print "Scanning..."
-            _devices = self.scanner.scan(10.0)
+            try:
+                _devices = self.scanner.scan(10.0)
+            except BTLEException:
+                continue
             _onlineDeviceAddresses = {}
             #_counter = 0
             print "Iterating over devices..."
