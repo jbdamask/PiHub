@@ -20,6 +20,7 @@ Todo:
 from bluepy.btle import Scanner, BTLEException
 import threading
 import time
+import json
 
 
 class DeviceScanner(threading.Thread):
@@ -64,15 +65,13 @@ class DeviceScanner(threading.Thread):
             with self.lock:
                 for r in self._registeredDevices.keys():
                     if r not in _onlineDeviceAddresses:
+                        t = int(time.time())
                         if r not in self._probationDevices:
-                            t = int(time.time())
                             self._probationDevices[r] = t
                             print r + ", you're on probation bitch! Start time is " + str(t)
                         else:
-                            t = int(time.time()) - self._probationDevices[r]
-                            print "Time: " + str(t)
                             # Between statement needed because upon entry into the list, the time is seconds since the epoch
-                            if (t > self._waitBeforeUnregisteringDevice) and (t < 1000000):
+                            if t - self._probationDevices[r] > self._waitBeforeUnregisteringDevice:
                                 print r + " has been offline for " + str(t) + " seconds. You're outta here!"
                                 del self._registeredDevices[r]
                                 del self._probationDevices[r]
