@@ -70,6 +70,7 @@ class DeviceScanner(threading.Thread):
                             print r + ", you're on probation bitch! Start time is " + str(t)
                         else:
                             t = int(time.time()) - self._probationDevices[r]
+                            print "Time: " + str(t)
                             # Between statement needed because upon entry into the list, the time is seconds since the epoch
                             if (t > self._waitBeforeUnregisteringDevice) and (t < 1000000):
                                 print r + " has been offline for " + str(t) + " seconds. You're outta here!"
