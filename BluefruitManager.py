@@ -24,7 +24,7 @@ class DeviceScanner(threading.Thread):
             print "Iterating over devices..."
             for d in _devices:
                 # If we're over the limit just stop
-                while _counter < self._deviceLimit:
+                if _counter < self._deviceLimit:
                     print _counter
                     _onlineDeviceAddresses[d.addr] = ""
                     for (adtype, desc, value) in d.getScanData():
