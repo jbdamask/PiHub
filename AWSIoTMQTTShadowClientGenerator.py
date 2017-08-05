@@ -94,6 +94,8 @@ class AWSIoTMQTTShadowClientGenerator:
 
 
     def updateState(self, value):
+        print "updateState() msg:"
+        print "  " + json.dumps(value)
         self._reported_state[value["MAC"]] = value
         for x in self._desired_state:
             self._desired_state[x]["color"] = value["color"]
