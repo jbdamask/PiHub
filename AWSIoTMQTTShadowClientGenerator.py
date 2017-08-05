@@ -85,7 +85,7 @@ class AWSIoTMQTTShadowClientGenerator:
         # Create the initial State
         self._desired_state = {}
         self._reported_state = {}
-        self._deviceAddr = []
+        self._devices = []
 
 
     def getState(self):
@@ -103,17 +103,20 @@ class AWSIoTMQTTShadowClientGenerator:
         print "Desired state values: " + json.dumps(self._desired_state.values())
         print "Reported state values: " + json.dumps(self._reported_state.values())
         if len(self._desired_state) > 1:
-            for x in self._desired_state.keys():
+            #for x in self._desired_state.keys():
+            for x in self._devices:
                 if x != value["MAC"]:
-                    self._desired_state[x]["color"] = value["color"]
+                    self._desired_state[x] = value
+#                    self._desired_state[x]["color"] = value["color"]
+#                    self._desired_state[x]["MAC"] = value["MAC"]
         else:
             self._desired_state[value["MAC"]] = value
         return self.getState()
 
 
     def registerDeviceAddress(self, address):
-
-        self._desired_state["address"] = ""
-        self._reported_state["address"] = ""
+        self._devices.append(address)
+        #self._desired_state["address"] = ""
+        #self._reported_state["address"] = ""
 
 
