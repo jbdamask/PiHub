@@ -42,7 +42,8 @@ while True:
             blm = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
             bleMonitors[k] = blm
             print "Starting thread for device: " + blm.addr
-            blm.start()
+            if blm.start() == 0:
+                deviceScanner.removeDevice(k)
     blms = bleMonitors.keys()
     for b in blms:
         if b not in registeredDevices:

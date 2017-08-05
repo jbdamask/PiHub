@@ -96,3 +96,7 @@ class DeviceScanner(threading.Thread):
 
     def getDevices(self):
         return self._registeredDevices
+
+    def removeDevice(self, devId):
+        with self.lock:
+            del self._registeredDevices[devId]

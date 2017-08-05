@@ -1,4 +1,4 @@
-from bluepy.btle import Scanner, DefaultDelegate, Peripheral
+from bluepy.btle import DefaultDelegate, Peripheral, BTLEException
 import binascii
 from datetime import datetime
 import threading
@@ -76,11 +76,16 @@ class BluefruitMonitor(threading.Thread):
                 return 0
         while True:
             print self.addr + ": Waiting for notifications"
-            if self.p.waitForNotifications(1):
-                msg = self.p.delegate.getLastMessage()
-                if msg != 0 and msg is not None:
-                    self.txh.write(msg)
-                    self.clearMessage()
+            try:
+                if self.p.waitForNotifications(1):
+                    msg = self.p.delegate.getLastMessage()
+                    if msg != 0 and msg is not None:
+                        self.txh.write(msg)
+                        self.clearMessage()
+            except BTLEException:
+                print BTLEException.message
+                return 0
+                # Add callback to remove device
 
 #    def getLastMessage(self):
 #         try:
@@ -89,6 +94,8 @@ class BluefruitMonitor(threading.Thread):
 #         except:
 #             #return 0
 #             return
+
+
 
     def clearMessage(self):
         self.p.delegate.clearMessage()
