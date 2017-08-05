@@ -1,7 +1,6 @@
 from NotificationDelegate import NotificationDelegate
 import json
 import sys
-from binascii import unhexlify, b2a_base64
 
 class BluefruitNotificationDelegate(NotificationDelegate):
 
@@ -28,8 +27,8 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                         print("Trying to send color to device: " + s["color"])
                         print ("DEBUGGING: I turned off txh.write")
                         colorString = json.dumps(s["color"])
-                        base64ColorString = b2a_base64(unhexlify(colorString))
-                        blm.txh.write(base64ColorString)
+                        # BluePy write takes a string. See https://github.com/IanHarvey/bluepy/issues/20
+                        blm.txh.write(colorString.encode('utf-8'))
                         print("     New color sent to device: " + s["MAC"])
                     except:
                         e = sys.exc_info()[0]
