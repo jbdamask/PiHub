@@ -1,6 +1,8 @@
 from bluepy.btle import Scanner, DefaultDelegate, Peripheral
 import binascii
 from datetime import datetime
+import threading
+import sys
 
 
 
@@ -30,13 +32,14 @@ class BluefruitDelegate(DefaultDelegate):
         self.message = 0
 
 
-class BluefruitMonitor:
+class BluefruitMonitor(threading.Thread):
 
     monitor = "OFF"
     txUUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e"
     rxUUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e"
 
     def __init__(self, mac, notificationDelgate):
+        threading.Thread.__init__(self)
         try:
             self.p = Peripheral(mac, "random")
             self.notificationDelgate = notificationDelgate
@@ -45,7 +48,8 @@ class BluefruitMonitor:
             print "Not connected"
             return None
 
-    def startMonitor(self):        
+    #def startMonitor(self):
+    def run(self):
         self.rxh = self.p.getCharacteristics(uuid=self.rxUUID)[0]
         self.txh = self.p.getCharacteristics(uuid=self.txUUID)[0]
         print("RX handle: " + str(self.rxh.getHandle()))
@@ -65,14 +69,20 @@ class BluefruitMonitor:
                 self.p.disconnect()
             except:
                 return 0
+        while True:
+            if self.p.waitForNotifications(1):
+                msg = self.p.delegate.getLastMessage()
+                if msg != 0 and msg is not None:
+                    self.txh.write(msg)
+                    self.clearMessage()
 
-    def getLastMessage(self):
-        try:
-            self.p.waitForNotifications(1.0)            
-            return self.p.delegate.getLastMessage()
-        except:
-            #return 0
-            return
+#    def getLastMessage(self):
+#         try:
+#             self.p.waitForNotifications(1.0)
+#             return self.p.delegate.getLastMessage()
+#         except:
+#             #return 0
+#             return
 
     def clearMessage(self):
         self.p.delegate.clearMessage()

@@ -38,9 +38,9 @@ while True:
         registeredDevices = deviceScanner.getDevices().keys()
     for k in registeredDevices:
         if k not in bleMonitors:
-            bleMonitors[k] = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
-            bleMonitors[k].startMonitor()
             shadow.registerDeviceAddress(k)
+            bleMonitors[k] = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
+            bleMonitors[k].start()
     blms = bleMonitors.keys()
     for b in blms:
         if b not in registeredDevices:
