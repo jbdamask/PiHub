@@ -16,6 +16,9 @@ class ShadowCallbackContainer:
         payloadDict = json.loads(payload)
         deltaMessage = json.dumps(payloadDict["state"])
         print(deltaMessage)
+        # update the device using our NotificationHandler delegate object
+        self.notificationDelegate.notify(payload)
+
         print("Request to update the reported state...")
         newPayload = '{"state":{"reported":' + deltaMessage + '}}'
         print "Calling deviceShadowInstance which is type " + self.deviceShadowInstance.__class__.__name__
@@ -126,4 +129,5 @@ class AWSIoTMQTTShadowClientGenerator:
         #self._reported_state["address"] = ""
 
     def registerNotificationDelegate(self, notificationDelgate):
-        self.notificationDelgate = notificationDelgate
+        #self.notificationDelgate = notificationDelgate
+        self.shadowCallbackContainer_Bot.setNotificationDelegate(notificationDelgate)
