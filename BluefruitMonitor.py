@@ -55,7 +55,7 @@ class BluefruitMonitor(threading.Thread):
     def run(self):
         print self.addr + ": In run method for BluefruitMonitor"
         self.rxh = self.p.getCharacteristics(uuid=self.rxUUID)[0]
-        self.txh = self.p.getCharacteristics(uuid=self.txUUID)[0]
+        self.txCharacteristic = self.p.getCharacteristics(uuid=self.txUUID)[0]
         print("RX handle: " + str(self.rxh.getHandle()))
         # Note setDelegate method has been replaced by withDelegate. Change this
         self.p.setDelegate(BluefruitDelegate(self.rxh.getHandle(), self.addr, self.notificationDelgate))
@@ -80,7 +80,7 @@ class BluefruitMonitor(threading.Thread):
                 if self.p.waitForNotifications(1):
                     msg = self.p.delegate.getLastMessage()
                     if msg != 0 and msg is not None:
-                        self.txh.write(msg)
+                        self.txCharacteristic.write(msg)
                         self.clearMessage()
             except BTLEException:
                 print BTLEException.message

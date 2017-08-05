@@ -52,14 +52,14 @@ while True:
     # blm1Msg = blm1.getLastMessage()
     # if blm1Msg != 0 and blm1Msg is not None:
     #     print("Received message from E0:F2:72:20:15:43")
-    #     blm2.txh.write(blm1.getLastMessage())
+    #     blm2.txCharacteristic.write(blm1.getLastMessage())
     #     print("     wrote message to FB:E4:1D:F1:22:96")
     #     blm1.clearMessage()
     #
     # blm2Msg = blm2.getLastMessage()
     # if blm2Msg != 0 and blm2Msg is not None:
     #     print("Received message from FB:E4:1D:F1:22:96")
-    #     blm1.txh.write(blm2.getLastMessage())
+    #     blm1.txCharacteristic.write(blm2.getLastMessage())
     #     print("     wrote message to E0:F2:72:20:15:43")
     #     blm2.clearMessage()
     #	time.sleep(1)

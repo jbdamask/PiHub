@@ -25,10 +25,10 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                     try:
                         print("TX handle: " + str(blm.txh.getHandle()))
                         print("Trying to send color to device: " + s["color"])
-                        print ("DEBUGGING: I turned off txh.write")
+                        print ("DEBUGGING: I turned off txCharacteristic.write")
                         colorString = json.dumps(s["color"])
                         # BluePy write takes a string. See https://github.com/IanHarvey/bluepy/issues/20
-                        blm.txh.write(colorString.encode('utf-8'))
+                        blm.txCharacteristic.write( colorString.encode('utf-8') )
                         print("     New color sent to device: " + s["MAC"])
                     except:
                         e = sys.exc_info()[0]
