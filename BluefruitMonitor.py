@@ -40,6 +40,8 @@ class BluefruitMonitor(threading.Thread):
 
     def __init__(self, mac, notificationDelgate):
         threading.Thread.__init__(self)
+        self.daemon = True
+        self.addr = mac
         try:
             self.p = Peripheral(mac, "random")
             self.notificationDelgate = notificationDelgate
@@ -50,6 +52,7 @@ class BluefruitMonitor(threading.Thread):
 
     #def startMonitor(self):
     def run(self):
+        print self.addr + ": In run method for BluefruitMonitor"
         self.rxh = self.p.getCharacteristics(uuid=self.rxUUID)[0]
         self.txh = self.p.getCharacteristics(uuid=self.txUUID)[0]
         print("RX handle: " + str(self.rxh.getHandle()))
