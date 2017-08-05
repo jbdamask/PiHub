@@ -12,6 +12,7 @@ class BluefruitDelegate(DefaultDelegate):
 
     # Constructor. Takes the RX handle, the MAC address of the Peripheral and a NotificationDelegate
     def __init__(self, handle, addr, notificationDelgate):
+        print addr + ": Creating BluefruitDelegate"
         DefaultDelegate.__init__(self)
         self.hndl=handle
         self.addr=addr
@@ -57,7 +58,7 @@ class BluefruitMonitor(threading.Thread):
         self.txh = self.p.getCharacteristics(uuid=self.txUUID)[0]
         print("RX handle: " + str(self.rxh.getHandle()))
         # Note setDelegate method has been replaced by withDelegate. Change this
-        self.p.setDelegate(BluefruitDelegate(self.rxh.getHandle(), self.p.addr, self.notificationDelgate))
+        self.p.setDelegate(BluefruitDelegate(self.rxh.getHandle(), self.addr, self.notificationDelgate))
         try:
             # Turn on notifications. If 35 isn't your handle run hcidump in one window, bluetoothctl in another
             # then connect, select-atrribute for RX then set "notify on". 
@@ -73,6 +74,7 @@ class BluefruitMonitor(threading.Thread):
             except:
                 return 0
         while True:
+            print self.addr + ": Waiting for notifications"
             if self.p.waitForNotifications(1):
                 msg = self.p.delegate.getLastMessage()
                 if msg != 0 and msg is not None:
