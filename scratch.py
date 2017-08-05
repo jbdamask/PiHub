@@ -38,7 +38,7 @@ while True:
         registeredDevices = deviceScanner.getDevices().keys()
     for k in registeredDevices:
         if k not in bleMonitors:
-            shadow.registerDeviceAddress(k)
+          #  shadow.registerDeviceAddress(k)
             blm = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
             bleMonitors[k] = blm
             print "Starting thread for device: " + blm.addr

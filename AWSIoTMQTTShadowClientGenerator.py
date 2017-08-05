@@ -96,6 +96,7 @@ class AWSIoTMQTTShadowClientGenerator:
     def updateState(self, value):
         print "updateState() msg:"
         print "  " + json.dumps(value)
+
         self._reported_state[value["MAC"]] = value
         self._desired_state[value["MAC"]] = value
         print "Desired state values: " + json.dumps(self._desired_state.values())
@@ -112,4 +113,5 @@ class AWSIoTMQTTShadowClientGenerator:
     def registerDeviceAddress(self, address):
         self._desired_state["address"] = ""
         self._reported_state["address"] = ""
+
 
