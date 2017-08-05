@@ -85,6 +85,7 @@ class AWSIoTMQTTShadowClientGenerator:
         # Create the initial State
         self._desired_state = {}
         self._reported_state = {}
+        self._deviceAddr = []
 
 
     def getState(self):
@@ -111,6 +112,7 @@ class AWSIoTMQTTShadowClientGenerator:
 
 
     def registerDeviceAddress(self, address):
+
         self._desired_state["address"] = ""
         self._reported_state["address"] = ""
 

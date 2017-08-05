@@ -36,14 +36,14 @@ bleMonitors = {}
 while True:
     with lock:
         registeredDevices = deviceScanner.getDevices().keys()
-    for k in registeredDevices:
-        if k not in bleMonitors:
-          #  shadow.registerDeviceAddress(k)
-            blm = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
-            bleMonitors[k] = blm
-            print "Starting thread for device: " + blm.addr
-            if blm.start() == 0:
-                deviceScanner.removeDevice(k)
+        for k in registeredDevices:
+            if k not in bleMonitors:
+                shadow.registerDeviceAddress(k)
+                blm = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
+                bleMonitors[k] = blm
+                print "Starting thread for device: " + blm.addr
+                if blm.start() == 0:
+                    deviceScanner.removeDevice(k)
     blms = bleMonitors.keys()
     for b in blms:
         if b not in registeredDevices:
