@@ -125,4 +125,5 @@ class AWSIoTMQTTShadowClientGenerator:
         #self._desired_state["address"] = ""
         #self._reported_state["address"] = ""
 
-
+    def registerNotificationDelegate(self, notificationDelgate):
+        self.notificationDelgate = notificationDelgate

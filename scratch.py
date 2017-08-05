@@ -1,11 +1,10 @@
 from AWSIoTMQTTShadowClientGenerator import AWSIoTMQTTShadowClientGenerator, ShadowCallbackContainer
-from bluepy.btle import Scanner, DefaultDelegate, Peripheral
 from BluefruitMonitor import BluefruitMonitor
 from BLEDeviceScanner import DeviceScanner
-import time
-import json
 import threading
 from AWSIoTNotificationDelegate import AWSIoTNotificationDelegate
+from BluefruitNotificationDelegate import BluefruitNotificationDelegate
+
 
 shadow = AWSIoTMQTTShadowClientGenerator("a2i4zihblrm3ge.iot.us-east-1.amazonaws.com",
                                          "/home/pi/PiHub/root-CA.crt",
@@ -24,13 +23,11 @@ lock = threading.RLock()
 # Set up a dictionary to track BluefruitMonitors
 bleMonitors = {}
 
-# blm1 = BluefruitMonitor("E0:F2:72:20:15:43", AWSIoTNotificationDelegate("E0:F2:72:20:15:43", shadow))
-# blm1.startMonitor()
-# blm2 = BluefruitMonitor("FB:E4:1D:F1:22:96", AWSIoTNotificationDelegate("FB:E4:1D:F1:22:96", shadow))
-# blm2.startMonitor()
-#
-# shadow.registerDeviceAddress("E0:F2:72:20:15:43")
-# shadow.registerDeviceAddress("FB:E4:1D:F1:22:96")
+# Configure bluetooth notification delegate
+blmNotificationDelegate = BluefruitNotificationDelegate()
+
+# Pass it to the shadow so the deviceShadow can call it
+shadow.registerNotificationDelegate(blmNotificationDelegate)
 
 # Loop forever
 while True:
@@ -41,6 +38,7 @@ while True:
             with lock:
                 shadow.registerDeviceAddress(k)
             blm = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
+            blmNotificationDelegate.bleDevices.append(blm)
             bleMonitors[k] = blm
             print "Starting thread for device: " + blm.addr
             if blm.start() == 0:
