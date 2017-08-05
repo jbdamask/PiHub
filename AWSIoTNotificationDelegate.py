@@ -18,8 +18,8 @@ class AWSIoTNotificationDelegate(NotificationDelegate):
         print "New data received!"
         print binascii.b2a_hex(data)
 
-        d = '{ "MAC": "' + self.deviceId + '", "color": "' + binascii.b2a_hex(data) + '" }'
-        
+        d = { "MAC": self.deviceId, "color": binascii.b2a_hex(data)}
+
 #        _s = self.deviceShadowInstance.updateState(binascii.b2a_hex(data))
         _s = self.deviceShadowInstance.updateState(d)
         print("New state: " + _s)
