@@ -13,6 +13,8 @@ Section breaks are created by resuming unindented text. Section breaks
 are also implicitly created anytime a new section starts.
 
 Todo:
+    * Major problem here...once Peripheral is connected it doesn't advertise and
+        won't show up in a scan
     * Externalize device type so we can search for different stuff
 
 """
