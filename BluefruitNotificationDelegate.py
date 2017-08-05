@@ -25,6 +25,7 @@ class BluefruitNotificationDelegate(NotificationDelegate):
           #          print s["MAC"] + " : " + s["color"]
                     try:
                         print("TX handle: " + str(blm.txh.getHandle()))
+                        print("Trying to send color to device: " + s["color"])
                         blm.txh.write(s["color"])
                         print("     New color sent to device: " + s["MAC"])
                     except:
