@@ -89,9 +89,9 @@ class AWSIoTMQTTShadowClientGenerator:
 
 
     def getState(self):
-        _r = '"reported": {"ble_devices":' + json.dumps(self._reported_state.values())
-        _d = '"desired": {"ble_devices":' + json.dumps(self._reported_state.values())
-        return '{"state": {' + _r + ', ' + _d + '} }'
+        _r = '"reported": {"ble_devices":' + json.dumps(self._reported_state.values()) + '}'
+        _d = '"desired": {"ble_devices":' + json.dumps(self._reported_state.values()) + '}'
+        return '{"state": {' + _r + ', {' + _d + '}'
 
 
     def updateState(self, value):
@@ -115,6 +115,7 @@ class AWSIoTMQTTShadowClientGenerator:
 
 
     def registerDeviceAddress(self, address):
+        print "AWSIoTMQTTShadowClientGenerator is registering device: " + address
         self._devices.append(address)
         #self._desired_state["address"] = ""
         #self._reported_state["address"] = ""
