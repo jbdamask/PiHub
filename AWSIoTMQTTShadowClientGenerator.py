@@ -105,7 +105,7 @@ class AWSIoTMQTTShadowClientGenerator:
         print "Devices: " + ' '.join(self._devices)
         for x in self._devices:
             #if x != value["MAC"]:
-            self._desired_state[x] = value
+            self._desired_state[x]["color"] = value["color"]
         #                    self._desired_state[x]["color"] = value["color"]
         #                    self._desired_state[x]["MAC"] = value["MAC"]
        # if len(self._desired_state) > 1:
