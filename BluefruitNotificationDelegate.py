@@ -21,6 +21,7 @@ class BluefruitNotificationDelegate(NotificationDelegate):
         for blm in self.bleDevices:
             for s in states:
                 if blm.addr == s["MAC"]:
+                    print s["MAC"] + " : " + s["color"]
                     blm.txh.write(s["color"])
                     print("     New color sent to device: " + s["MAC"])
 
