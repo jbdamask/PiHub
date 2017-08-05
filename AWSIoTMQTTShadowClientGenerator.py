@@ -102,7 +102,7 @@ class AWSIoTMQTTShadowClientGenerator:
         self._desired_state[value["MAC"]] = value
         print "Desired state values: " + json.dumps(self._desired_state.values())
         print "Reported state values: " + json.dumps(self._reported_state.values())
-        print "Devices: " + self._devices
+        print "Devices: " + ''.join(self._devices)
         for x in self._devices:
             if x != value["MAC"]:
                 self._desired_state[x] = value
