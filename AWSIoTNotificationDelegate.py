@@ -17,7 +17,10 @@ class AWSIoTNotificationDelegate(NotificationDelegate):
         #newPayload = '{"state":{"reported":' + binascii.b2a_hex(data) + '}}'
         print "New data received!"
         print binascii.b2a_hex(data)
-        _s = self.deviceShadowInstance.updateState(binascii.b2a_hex(data))
+        d = dict()
+        d[self.deviceId] = binascii.b2a_hex(data)
+#        _s = self.deviceShadowInstance.updateState(binascii.b2a_hex(data))
+        _s = self.deviceShadowInstance.updateState(d)
         print("New state: " + _s)
         self.deviceShadowInstance.shadowUpdate(_s, None, 5)
         #self.notificationInstance.notify(newPayload)
