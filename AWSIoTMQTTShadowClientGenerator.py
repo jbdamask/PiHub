@@ -1,10 +1,6 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
-from NotificationDelegate import NotificationDelegate
-import sys
 import logging
-import time
 import json
-import argparse
 
 
 class ShadowCallbackContainer:
@@ -21,7 +17,7 @@ class ShadowCallbackContainer:
         print(deltaMessage)
         print("Request to update the reported state...")
         newPayload = '{"state":{"reported":' + deltaMessage + '}}'
-        self.deviceShadowInstance.myAWSIoTMQTTShadowClient.shadowUpdate(newPayload, None, 5)
+        self.deviceShadowInstance.shadowUpdate(newPayload, None, 5)
         print("Sent.")
 
     # Notification delegate knows how to notify other stuff
