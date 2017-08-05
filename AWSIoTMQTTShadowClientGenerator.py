@@ -90,7 +90,7 @@ class AWSIoTMQTTShadowClientGenerator:
 
     def getState(self):
         _r = '"reported": {"ble_devices":' + json.dumps(self._reported_state.values()) + '}'
-        _d = '"desired": {"ble_devices":' + json.dumps(self._reported_state.values()) + '}'
+        _d = '"desired": {"ble_devices":' + json.dumps(self._desired_state.values()) + '}'
         return '{"state": {' + _r + ', ' + _d + '} }'
 
 
