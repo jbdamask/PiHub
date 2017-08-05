@@ -6,6 +6,7 @@ import json
 class ShadowCallbackContainer:
     def __init__(self, deviceShadowInstance):
         self.deviceShadowInstance = deviceShadowInstance
+        print "ShadowCallbackContainer passed reference to deviceShadowInstance of type " + type(deviceShadowInstance).__name__
 
     # Custom Shadow callback
     def customShadowCallbackDelta(self, payload, responseStatus, token):
