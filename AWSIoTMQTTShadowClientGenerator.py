@@ -21,7 +21,7 @@ class ShadowCallbackContainer:
         print(deltaMessage)
         print("Request to update the reported state...")
         newPayload = '{"state":{"reported":' + deltaMessage + '}}'
-        self.deviceShadowInstance.shadowUpdate(newPayload, None, 5)
+        self.deviceShadowInstance.myAWSIoTMQTTShadowClient.shadowUpdate(newPayload, None, 5)
         print("Sent.")
 
     # Notification delegate knows how to notify other stuff
@@ -102,6 +102,7 @@ class AWSIoTMQTTShadowClientGenerator:
         self._desired_state[value["MAC"]] = value
         print "Desired state values: " + json.dumps(self._desired_state.values())
         print "Reported state values: " + json.dumps(self._reported_state.values())
+        print "Devices: " + self._devices
         for x in self._devices:
             if x != value["MAC"]:
                 self._desired_state[x] = value
