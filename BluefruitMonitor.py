@@ -75,7 +75,7 @@ class BluefruitMonitor(threading.Thread):
             except:
                 return 0
         while True:
-            print self.addr + ": Waiting for notifications"
+           # print self.addr + ": Waiting for notifications"
             try:
                 if self.p.waitForNotifications(1):
                     msg = self.p.delegate.getLastMessage()
