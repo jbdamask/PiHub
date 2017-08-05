@@ -18,7 +18,7 @@ class ShadowCallbackContainer:
         print(deltaMessage)
         print("Request to update the reported state...")
         newPayload = '{"state":{"reported":' + deltaMessage + '}}'
-        print "Calling deviceShadowInstance which is type " + deviceShadowInstance.__class__.__name__
+        print "Calling deviceShadowInstance which is type " + self.deviceShadowInstance.__class__.__name__
         self.deviceShadowInstance.shadowUpdate(newPayload, None, 5)
         print("Sent.")
 
