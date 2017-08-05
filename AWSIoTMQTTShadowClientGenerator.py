@@ -97,6 +97,8 @@ class AWSIoTMQTTShadowClientGenerator:
         self._reported_state[value["MAC"]] = value
         for x in self._desired_state:
             self._desired_state[x]["color"] = value["color"]
+        print "Desired state values: " + json.dumps(self._desired_state.values())
+        print "Reported state values: " + json.dumps(self._reported_state.values())
         return self.getState()
 
 
