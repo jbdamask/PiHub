@@ -1,5 +1,6 @@
 from NotificationDelegate import NotificationDelegate
 import json
+import sys
 
 
 class BluefruitNotificationDelegate(NotificationDelegate):
@@ -21,8 +22,17 @@ class BluefruitNotificationDelegate(NotificationDelegate):
         for blm in self.bleDevices:
             for s in states:
                 if blm.addr == s["MAC"]:
-                    print s["MAC"] + " : " + s["color"]
-                    blm.txh.write(s["color"])
-                    print("     New color sent to device: " + s["MAC"])
+          #          print s["MAC"] + " : " + s["color"]
+                    try:
+                        print("TX handle: " + str(blm.txh.getHandle()))
+                        blm.txh.write(s["color"])
+                        print("     New color sent to device: " + s["MAC"])
+                    except:
+                        e = sys.exc_info()[0]
+                        print("BluefruitMonitor Error on call to TX: %s" % e)
+                        try:
+                            self.p.disconnect()
+                        except:
+                            return 0
 
 
