@@ -122,8 +122,8 @@ class AWSIoTMQTTShadowClientGenerator:
     def registerDeviceAddress(self, address):
         print "AWSIoTMQTTShadowClientGenerator is registering device: " + address
         self._devices.append(address)
-        # Initialize dictionary for this BLE device. Set to arbitrary color
-        self._desired_state[address] = { "MAC": address, "color": "214300ff009c"}
+        # Initialize dictionary for this BLE device. Set color to off
+        self._desired_state[address] = { "MAC": address, "color": "21430000009b"}
         #self._desired_state["address"] = ""
         #self._reported_state["address"] = ""
 
