@@ -47,7 +47,7 @@ while True:
     for b in blms:
         if b not in registeredDevices:
             del bleMonitors[b]
-
+        print bleMonitors[b].getLastMessage()
 
     # blm1Msg = blm1.getLastMessage()
     # if blm1Msg != 0 and blm1Msg is not None:
