@@ -63,9 +63,10 @@ class BluefruitMonitor(threading.Thread):
             # Turn on notifications. If 35 isn't your handle run hcidump in one window, bluetoothctl in another
             # then connect, select-atrribute for RX then set "notify on". 
             # Inspect the hcidump log for the handle associated with "Write req" 
-            print(self.p.writeCharacteristic(35, b"\x01\x00", withResponse=True))
+            print "Configuring RX to notify me on change"
+            self.p.writeCharacteristic(35, b"\x01\x00", withResponse=True)
             self.monitor = "ON"
-            return 0
+            #return 0
         except:
             e = sys.exc_info()[0]
             print("BluefruitMonitor Error: %s" % e)
