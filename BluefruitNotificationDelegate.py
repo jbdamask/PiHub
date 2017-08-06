@@ -38,6 +38,8 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                         print "Will try to reconnect..."
                         try:
                             blm.reconnect()
+                            blm.txCharacteristic.write(binascii.unhexlify(colorString), True)
+                            print("     New color sent to device: " + s["MAC"])
                         except BTLEException as e2:
                             print "BTLException: " + e.message
                             print "Reconnect failed. Sorry"
