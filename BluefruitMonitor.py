@@ -53,7 +53,24 @@ class BluefruitMonitor(threading.Thread):
     #def startMonitor(self):
     def run(self):
         print self.addr + ": In run method for BluefruitMonitor"
-        self.rxh = self.p.getCharacteristics(uuid=self.rxUUID)[0]
+        try:
+            self.rxh = self.p.getCharacteristics(uuid=self.rxUUID)[0]
+        except AttributeError as a:
+            print(str(datetime.now()) + " AttributeError: " + a.message)
+            print(str(datetime.now()) + " Will try to connect to Peripheral...")
+            try:
+                self.p = Peripheral(self.addr, "random")
+                self.notificationDelgate = self.notificationDelgate
+                print(str(datetime.now()) + " Peripheral connected successfully!")
+                self.rxh = self.p.getCharacteristics(uuid=self.rxUUID)[0]
+            except:
+                e2 = e = sys.exc_info()[0]
+                print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
+        except:
+            e = sys.exc_info()[0]
+            print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
+
+
         self.txCharacteristic = self.p.getCharacteristics(uuid=self.txUUID)[0]
         print("RX handle: " + str(self.rxh.getHandle()))
         # Note setDelegate method has been replaced by withDelegate. Change this
