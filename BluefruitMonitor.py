@@ -63,12 +63,17 @@ class BluefruitMonitor(threading.Thread):
                 self.notificationDelgate = self.notificationDelgate
                 print(str(datetime.now()) + " Peripheral connected successfully!")
                 self.rxh = self.p.getCharacteristics(uuid=self.rxUUID)[0]
+            except BTLEException as e:
+                print(str(datetime.now()) + " BTLEException: " + e.message)
+                return 0
             except:
                 e2 = e = sys.exc_info()[0]
                 print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
+                return 0
         except:
             e = sys.exc_info()[0]
             print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
+            return 0
 
 
         self.txCharacteristic = self.p.getCharacteristics(uuid=self.txUUID)[0]

@@ -38,6 +38,8 @@ while True:
             with lock:
                 shadow.registerDeviceAddress(k)
             blm = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
+            if(blm is None):
+                continue
             blmNotificationDelegate.bleDevices.append(blm)
             bleMonitors[k] = blm
             print "Starting thread for device: " + blm.addr
