@@ -18,7 +18,6 @@ class BluefruitNotificationDelegate(NotificationDelegate):
 #        deltaMessage = json.dumps(payloadDict["state"])
         # Get the list of device states to modify
         states = payloadDict["state"]["ble_devices"]
-        print "Payload states: " + states
         print("Writing the payload to TX for all devices:")
         for blm in self.bleDevices:
             for s in states:
