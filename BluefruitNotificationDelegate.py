@@ -24,7 +24,7 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                 if blm.addr == s["MAC"]:
           #          print s["MAC"] + " : " + s["color"]
                     try:
-                        print("TX handle: " + str(blm.txh.getHandle()))
+                       # print("TX handle: " + str(blm.txCharacteristic()))
                         print("Trying to send color to device: " + s["color"])
                         print ("DEBUGGING: I turned off txCharacteristic.write")
                         colorString = json.dumps(s["color"])
