@@ -69,6 +69,9 @@ class DeviceScanner(threading.Thread):
                 for n in _onlineDeviceAddresses:
                     if (n not in self._registeredDevices) and (len(self._registeredDevices) < self._deviceLimit):
                         self._registeredDevices[n] = ""
+                    elif (n in self._registeredDevices):
+                        # If it's already registered but appears again it must have disconnected. Remove so we can reconnect
+                        self.removeDevice(n)
 
         time.sleep(2)
 
