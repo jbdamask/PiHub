@@ -1,6 +1,7 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
 import logging
 import json
+from datetime import datetime
 
 
 class ShadowCallbackContainer:
@@ -12,16 +13,15 @@ class ShadowCallbackContainer:
     def customShadowCallbackDelta(self, payload, responseStatus, token):
         # payload is a JSON string ready to be parsed using json.loads(...)
         # in both Py2.x and Py3.x
-        print("Received a delta message:")
+        print(str(datetime.now()) + " Received a delta message:")
         payloadDict = json.loads(payload)
         deltaMessage = json.dumps(payloadDict["state"])
         print(deltaMessage)
         # update the device using our NotificationHandler delegate object
         self.notificationDelegate.notify(payload)
 
-        print("Request to update the reported state...")
+        print(str(datetime.now()) + " Request to update the reported state...")
         newPayload = '{"state":{"reported":' + deltaMessage + '}}'
-        print "Calling deviceShadowInstance which is type " + self.deviceShadowInstance.__class__.__name__
         self.deviceShadowInstance.shadowUpdate(newPayload, None, 5)
         print("Sent.")
 
@@ -104,8 +104,8 @@ class AWSIoTMQTTShadowClientGenerator:
         for x in self._devices:
             #if x != value["MAC"]:
             self._desired_state[x]["color"] = value["color"]
-        print "Desired state values: " + json.dumps(self._desired_state.values())
-        print "Reported state values: " + json.dumps(self._reported_state.values())
+        print (str(datetime.now()) + " Desired state values: " + json.dumps(self._desired_state.values()))
+        print (str(datetime.now()) + " Reported state values: " + json.dumps(self._reported_state.values()))
         return self.getState()
 
 

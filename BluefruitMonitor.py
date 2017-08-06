@@ -20,8 +20,7 @@ class BluefruitDelegate(DefaultDelegate):
 
     def handleNotification(self, cHandle, data):    
         self.message = data
-        print("Notification from: " + self.addr)
-        print( str(datetime.now()) )        
+        print(str(datetime.now()) + " Notification from: " + self.addr)
         print(binascii.b2a_hex(data))
         self.notificationDelegate.notify(data)
 
