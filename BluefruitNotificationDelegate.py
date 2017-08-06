@@ -1,6 +1,7 @@
 from NotificationDelegate import NotificationDelegate
 import json
 import sys
+import binascii
 
 class BluefruitNotificationDelegate(NotificationDelegate):
 
@@ -27,8 +28,11 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                         print("Trying to send color to device: " + s["color"])
                         print ("DEBUGGING: I turned off txCharacteristic.write")
                         colorString = json.dumps(s["color"])
-                        # BluePy write takes a string. See https://github.com/IanHarvey/bluepy/issues/20
-                        blm.txCharacteristic.write( colorString.encode('utf-8') )
+                        # BluePy write expects a string that it will turn into hex.
+                        # This class assumes a payload is already in hex so we transform back before writing
+                        # See code for writeCharacteristic: https://github.com/IanHarvey/bluepy/blob/master/bluepy/btle.py
+                        #  See https://github.com/IanHarvey/bluepy/issues/20
+                        blm.txCharacteristic.write( binascii.unhexlify(colorString) )
                         print("     New color sent to device: " + s["MAC"])
                     except:
                         e = sys.exc_info()[0]
