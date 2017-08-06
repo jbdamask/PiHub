@@ -1,3 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+Classes for AWSIoT Device shadow and Callback container. This is basically the code that comes
+with the IoT samples but I turned the client into a class (AWSIoTMQTTShadowClientGenerator)
+
+
+Todo:
+    * I need to more the device dictionary initial state to another class...doesn't belong here
+
+"""
+
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
 import logging
 import json
@@ -19,7 +30,6 @@ class ShadowCallbackContainer:
         print(str(datetime.now()) + " " + deltaMessage)
         # update the device using our NotificationHandler delegate object
         self.notificationDelegate.notify(payload)
-
         print(str(datetime.now()) + " Update the reported state")
         newPayload = '{"state":{"reported":' + deltaMessage + '}}'
         self.deviceShadowInstance.shadowUpdate(newPayload, None, 5)
@@ -114,8 +124,7 @@ class AWSIoTMQTTShadowClientGenerator:
         self._devices.append(address)
         # Initialize dictionary for this BLE device. Set color to off
         self._desired_state[address] = { "MAC": address, "color": "21430000009b"}
-        #self._desired_state["address"] = ""
-        #self._reported_state["address"] = ""
+
 
     def registerNotificationDelegate(self, notificationDelgate):
         #self.notificationDelgate = notificationDelgate
