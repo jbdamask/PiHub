@@ -18,21 +18,21 @@ class BluefruitNotificationDelegate(NotificationDelegate):
 #        deltaMessage = json.dumps(payloadDict["state"])
         # Get the list of device states to modify
         states = payloadDict["state"]["ble_devices"]
+        print "Payload states: " + states
         print("Writing the payload to TX for all devices:")
         for blm in self.bleDevices:
             for s in states:
                 if blm.addr == s["MAC"]:
-          #          print s["MAC"] + " : " + s["color"]
+                    print("Trying to send color to device: " + s["color"])
+                    print ("DEBUGGING: I turned off txCharacteristic.write")
+                    #colorString = json.dumps(s["color"])
+                    colorString = s["color"]
+                    # BluePy write expects a string that it will turn into hex.
+                    # This class assumes a payload is already in hex so we transform back before writing
+                    # See code for writeCharacteristic: https://github.com/IanHarvey/bluepy/blob/master/bluepy/btle.py
+                    #  See https://github.com/IanHarvey/bluepy/issues/20
+                    print 'New color: ' + colorString
                     try:
-                       # print("TX handle: " + str(blm.txCharacteristic()))
-                        print("Trying to send color to device: " + s["color"])
-                        print ("DEBUGGING: I turned off txCharacteristic.write")
-                        colorString = json.dumps(s["color"])
-                        # BluePy write expects a string that it will turn into hex.
-                        # This class assumes a payload is already in hex so we transform back before writing
-                        # See code for writeCharacteristic: https://github.com/IanHarvey/bluepy/blob/master/bluepy/btle.py
-                        #  See https://github.com/IanHarvey/bluepy/issues/20
-                        print 'Unhexlified color string: ' + binascii.unhexlify(colorString)
                         blm.txCharacteristic.write( binascii.unhexlify(colorString), True )
                         print("     New color sent to device: " + s["MAC"])
                     except:
