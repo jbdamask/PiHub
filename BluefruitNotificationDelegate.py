@@ -2,6 +2,7 @@ from NotificationDelegate import NotificationDelegate
 import json
 import sys
 import binascii
+from bluepy.btle import BTLEException
 
 class BluefruitNotificationDelegate(NotificationDelegate):
 
@@ -32,6 +33,8 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                     try:
                         blm.txCharacteristic.write( binascii.unhexlify(colorString), True )
                         print("     New color sent to device: " + s["MAC"])
+                    except BTLEException as e:
+                        print "BTLEException: " + e.message
                     except:
                         e = sys.exc_info()[0]
                         print("BluefruitMonitor Error on call to TX: %s" % e)
