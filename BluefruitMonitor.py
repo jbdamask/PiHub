@@ -102,3 +102,11 @@ class BluefruitMonitor(threading.Thread):
     def stopMonitor(self):
         self.monitor="OFF"
         self.p.writeCharacteristic(35, '\x00', withResponse=False)
+
+    # Trying some error handling...dunno if it will work
+    def reconnect(self):
+        try:
+            self.p.connect(self.addr, "random")
+        except:
+            print BTLEException.message
+            return 0

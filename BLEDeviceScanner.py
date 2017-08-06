@@ -65,25 +65,6 @@ class DeviceScanner(threading.Thread):
             # Replace registered devices with ones that are currently online
             # Remove devices we can't see anymore
             with self.lock:
-                # for r in self._registeredDevices.keys():
-                #     if r not in _onlineDeviceAddresses:
-                #         t = int(time.time())
-                #         if r not in self._probationDevices:
-                #             self._probationDevices[r] = t
-                #             print r + ", you're on probation bitch! Start time is " + str(t)
-                #         else:
-                #             # Between statement needed because upon entry into the list, the time is seconds since the epoch
-                #             if (t - self._probationDevices[r]) > self._waitBeforeUnregisteringDevice:
-                #                 print r + " has been offline for " + str(t - self._probationDevices[r]) + " seconds. You're outta here!"
-                #                 del self._registeredDevices[r]
-                #                 del self._probationDevices[r]
-                #             else:
-                #                 print "tsk tsk...device " + r + " has been offline for " + str(t - self._probationDevices[r]) + " seconds..."
-                #     else:
-                #         # Back online so let it slide
-                #         if r in self._probationDevices:
-                #             del self._probationDevices[r]
-
                 # Add devices we can (provided there's still space)
                 for n in _onlineDeviceAddresses:
                     if (n not in self._registeredDevices) and (len(self._registeredDevices) < self._deviceLimit):

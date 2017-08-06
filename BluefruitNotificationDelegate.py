@@ -35,6 +35,15 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                         print("     New color sent to device: " + s["MAC"])
                     except BTLEException as e:
                         print "BTLEException: " + e.message
+                        print "Will try to reconnect..."
+                        try:
+                            blm.reconnect()
+                        except BTLEException as e2:
+                            print "BTLException: " + e.message
+                            print "Reconnect failed. Sorry"
+                        except:
+                            e2 = e = sys.exc_info()[0]
+                            print("BluefruitMonitor Error on call to TX: %s" % e)
                     except:
                         e = sys.exc_info()[0]
                         print("BluefruitMonitor Error on call to TX: %s" % e)
