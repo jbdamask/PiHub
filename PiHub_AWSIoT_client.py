@@ -1,4 +1,19 @@
-from AWSIoTMQTTShadowClientGenerator import AWSIoTMQTTShadowClientGenerator, ShadowCallbackContainer
+# -*- coding: utf-8 -*-
+"""
+Client that connects together AWS IoT with Bluefruit devices. Generally speaking,
+this client attaches several bluetooth low energy (BLE) devices to a single internet-connected hub,
+I'm using a Raspberry Pi 3. The upshot is that each BLE device acts as a controller to
+all of the other BLE devices. Communication goes through AWS IoT so that other hubs connected to
+other BLE devices can join in the fun
+
+
+Author:
+    John B Damask
+
+
+"""
+
+from AWSIoTMQTTShadowClientGenerator import AWSIoTMQTTShadowClientGenerator
 from BluefruitMonitor import BluefruitMonitor
 from BLEDeviceScanner import DeviceScanner
 from datetime import datetime
@@ -51,19 +66,3 @@ while True:
     for b in blms:
         if b not in registeredDevices:
             del bleMonitors[b]
-        #print bleMonitors[b].getLastMessage()
-
-    # blm1Msg = blm1.getLastMessage()
-    # if blm1Msg != 0 and blm1Msg is not None:
-    #     print("Received message from E0:F2:72:20:15:43")
-    #     blm2.txCharacteristic.write(blm1.getLastMessage())
-    #     print("     wrote message to FB:E4:1D:F1:22:96")
-    #     blm1.clearMessage()
-    #
-    # blm2Msg = blm2.getLastMessage()
-    # if blm2Msg != 0 and blm2Msg is not None:
-    #     print("Received message from FB:E4:1D:F1:22:96")
-    #     blm1.txCharacteristic.write(blm2.getLastMessage())
-    #     print("     wrote message to E0:F2:72:20:15:43")
-    #     blm2.clearMessage()
-    #	time.sleep(1)

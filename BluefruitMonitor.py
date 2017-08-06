@@ -96,7 +96,6 @@ class BluefruitMonitor(threading.Thread):
             except:
                 return 0
         while True:
-           # print self.addr + ": Waiting for notifications"
             try:
                 if self.p.waitForNotifications(1):
                     msg = self.p.delegate.getLastMessage()
@@ -107,15 +106,6 @@ class BluefruitMonitor(threading.Thread):
                 print BTLEException.message
                 return 0
                 # Add callback to remove device
-
-#    def getLastMessage(self):
-#         try:
-#             self.p.waitForNotifications(1.0)
-#             return self.p.delegate.getLastMessage()
-#         except:
-#             #return 0
-#             return
-
 
 
     def clearMessage(self):
