@@ -32,7 +32,8 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                         # This class assumes a payload is already in hex so we transform back before writing
                         # See code for writeCharacteristic: https://github.com/IanHarvey/bluepy/blob/master/bluepy/btle.py
                         #  See https://github.com/IanHarvey/bluepy/issues/20
-                        blm.txCharacteristic.write( binascii.unhexlify(colorString) )
+                        print 'Unhexlified color string: ' + binascii.unhexlify(colorString)
+                        blm.txCharacteristic.write( binascii.unhexlify(colorString), True )
                         print("     New color sent to device: " + s["MAC"])
                     except:
                         e = sys.exc_info()[0]
