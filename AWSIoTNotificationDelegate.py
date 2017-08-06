@@ -19,12 +19,12 @@ class AWSIoTNotificationDelegate(NotificationDelegate):
         print binascii.b2a_hex(data)
 
         d = { "MAC": self.deviceId, "color": binascii.b2a_hex(data)}
-
+        print str(d)
 #        _s = self.deviceShadowInstance.updateState(binascii.b2a_hex(data))
         _s = self.deviceShadowInstance.updateState(d)
 #        print("New state: " + _s)
         self.deviceShadowInstance.deviceShadowHandler.shadowUpdate(_s, None, 5)
 #        self.deviceShadowInstance.shadowUpdate(_s, None, 5)
         #self.notificationInstance.notify(newPayload)
-        print("Sent.")
+        print("Sent to deviceShadowHandler")
 
