@@ -46,14 +46,14 @@ class DeviceScanner(threading.Thread):
     def run(self):
         print "Starting scanner thread"
         while True:
-            print "Scanning..."
+           # print "Scanning..."
             try:
                 _devices = self.scanner.scan(10.0)
             except BTLEException:
                 continue
             _onlineDeviceAddresses = {}
             #_counter = 0
-            print "Iterating over devices..."
+          #  print "Iterating over devices..."
             for d in _devices:
                 # If we're over the limit just stop
                 #if _counter < self._deviceLimit:

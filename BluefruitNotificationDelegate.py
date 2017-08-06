@@ -22,9 +22,7 @@ class BluefruitNotificationDelegate(NotificationDelegate):
         for blm in self.bleDevices:
             for s in states:
                 if blm.addr == s["MAC"]:
-                    print("Trying to send color to device: " + s["color"])
-                    print ("DEBUGGING: I turned off txCharacteristic.write")
-                    #colorString = json.dumps(s["color"])
+                    print("Send color to device: " + s["color"])
                     colorString = s["color"]
                     # BluePy write expects a string that it will turn into hex.
                     # This class assumes a payload is already in hex so we transform back before writing
