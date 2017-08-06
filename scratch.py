@@ -1,6 +1,7 @@
 from AWSIoTMQTTShadowClientGenerator import AWSIoTMQTTShadowClientGenerator, ShadowCallbackContainer
 from BluefruitMonitor import BluefruitMonitor
 from BLEDeviceScanner import DeviceScanner
+from datetime import datetime
 import threading
 from AWSIoTNotificationDelegate import AWSIoTNotificationDelegate
 from BluefruitNotificationDelegate import BluefruitNotificationDelegate
@@ -39,6 +40,7 @@ while True:
                 shadow.registerDeviceAddress(k)
             blm = BluefruitMonitor(k, AWSIoTNotificationDelegate(k, shadow))
             if(blm is None):
+                print(str(datetime.now()) + " Failed to connect to device. Will try again")
                 continue
             blmNotificationDelegate.bleDevices.append(blm)
             bleMonitors[k] = blm
