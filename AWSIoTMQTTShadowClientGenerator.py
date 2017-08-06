@@ -16,14 +16,14 @@ class ShadowCallbackContainer:
         print(str(datetime.now()) + " Received a delta message:")
         payloadDict = json.loads(payload)
         deltaMessage = json.dumps(payloadDict["state"])
-        print(deltaMessage)
+        print(str(datetime.now()) + " " + deltaMessage)
         # update the device using our NotificationHandler delegate object
         self.notificationDelegate.notify(payload)
 
-        print(str(datetime.now()) + " Request to update the reported state...")
+        print(str(datetime.now()) + " Update the reported state")
         newPayload = '{"state":{"reported":' + deltaMessage + '}}'
         self.deviceShadowInstance.shadowUpdate(newPayload, None, 5)
-        print("Sent.")
+        print(str(datetime.now()) + " Sent.")
 
     # Notification delegate knows how to notify other stuff
     def setNotificationDelegate(self, notificationDelegate):

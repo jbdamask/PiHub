@@ -3,6 +3,7 @@ import json
 import sys
 import binascii
 from bluepy.btle import BTLEException
+from datetime import datetime
 
 class BluefruitNotificationDelegate(NotificationDelegate):
 
@@ -11,7 +12,7 @@ class BluefruitNotificationDelegate(NotificationDelegate):
         self.bleDevices = []
 
     def notify(self, data):
-        print("Received a call to update Bluefruit!")
+        print(str(datetime.now()) + " Received a call to update Bluefruit!")
         print data
        # newPayload = data #convert data to binary payload here (or string?)#
        # print json.dumps(data)
@@ -19,11 +20,11 @@ class BluefruitNotificationDelegate(NotificationDelegate):
 #        deltaMessage = json.dumps(payloadDict["state"])
         # Get the list of device states to modify
         states = payloadDict["state"]["ble_devices"]
-        print("Writing the payload to TX for all devices:")
+        print(str(datetime.now()) + " Writing the payload to TX for all devices:")
         for blm in self.bleDevices:
             for s in states:
                 if blm.addr == s["MAC"]:
-                    print("Send color to device: " + s["color"])
+                    print(str(datetime.now()) + " Send color to device: " + s["color"])
                     colorString = s["color"]
                     # BluePy write expects a string that it will turn into hex.
                     # This class assumes a payload is already in hex so we transform back before writing
@@ -32,23 +33,24 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                     print 'New color: ' + colorString
                     try:
                         blm.txCharacteristic.write( binascii.unhexlify(colorString), True )
-                        print("     New color sent to device: " + s["MAC"])
+                        print(str(datetime.now()) + " New color sent to device: " + s["MAC"])
                     except BTLEException as e:
-                        print "BTLEException: " + e.message
-                        print "Will try to reconnect..."
+                        print(str(datetime.now()) + " BTLEException: " + e.message)
+                        print(str(datetime.now()) + " Will try to reconnect...")
                         try:
                             blm.reconnect()
                             blm.txCharacteristic.write(binascii.unhexlify(colorString), True)
-                            print("     New color sent to device: " + s["MAC"])
+                            print(str(datetime.now()) + " Reconnect successful!")
+                            print(str(datetime.now()) + " New color sent to device: " + s["MAC"])
                         except BTLEException as e2:
-                            print "BTLException: " + e.message
-                            print "Reconnect failed. Sorry"
+                            print(str(datetime.now()) + " BTLException: " + e.message)
+                            print(str(datetime.now()) + " Reconnect failed. Sorry")
                         except:
                             e2 = e = sys.exc_info()[0]
-                            print("BluefruitMonitor Error on call to TX: %s" % e)
+                            print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
                     except:
                         e = sys.exc_info()[0]
-                        print("BluefruitMonitor Error on call to TX: %s" % e)
+                        print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
                         try:
                             self.p.disconnect()
                         except:
