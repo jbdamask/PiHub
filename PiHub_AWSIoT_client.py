@@ -10,6 +10,8 @@ other BLE devices can join in the fun
 Author:
     John B Damask
 
+Todo:
+
 
 """
 

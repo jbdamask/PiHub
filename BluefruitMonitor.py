@@ -68,7 +68,7 @@ class BluefruitMonitor(threading.Thread):
                 return 0
             except:
                 e2 = e = sys.exc_info()[0]
-                print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
+                print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e.message)
                 return 0
         except:
             e = sys.exc_info()[0]
