@@ -10,8 +10,12 @@ other BLE devices can join in the fun
 Author:
     John B Damask
 
-Todo:
+Synopsis:
+    sudo python PiHub_AWSIoT_client
 
+Todo:
+    Externalize shadow connection information (right now it's connecting to my device
+    Buggy BLE stuff. Mis-connects and disconnects
 
 """
 

@@ -1,3 +1,6 @@
+# Notice
+This stuff all kinda works. Very fickle. It is currently limited to a single device shadow with multiple local BLEs
+
 # PiHub
 
 Connecting multiple Bluetooth Low Energy (BLE) devices to the same Raspberry Pi and communicating via AWS IoT.
@@ -8,7 +11,7 @@ The benefit of using IoT is that multiple Pis can connect over the internet and 
 
 ## Getting Started
 
-Just starting this project. There are no diagrams, build scripts, requirements.txt or anything that would make it real. As such, installation and getting things working is manual. But that's ok as it's just a home project (for now) ;-)
+Just starting this project. There are limited diagrams, no build scripts, requirements.txt or anything that would make it real. As such, installation and getting things working is manual. But that's ok as it's just a home project (for now) ;-)
 
 ### Prerequisites
 
