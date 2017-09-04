@@ -43,7 +43,7 @@ class BleNotificationThread (threading.Thread):
     def run(self):
         peripheral = peripherals[self.peripheral_addr]
         try:
-            peripheral.setDelegate(AWSIoTNotificationDelegate(self.peripheral_addr))
+            peripheral.setDelegate(AWSIoTNotificationDelegate(self.peripheral_addr, self.shadow))
             self.rxh = peripheral.getCharacteristics(uuid=self.rxUUID)[0]
             print "Configuring RX to notify me on change"
             peripheral.writeCharacteristic(35, b"\x01\x00", withResponse=True)
