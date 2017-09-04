@@ -42,7 +42,7 @@ class BleNotificationThread (threading.Thread):
     def run(self):
         peripheral = peripherals[self.peripheral_addr]
         try:
-            peripheral.setDelegate(NotificationDelegate(self.peripheral_addr))
+            peripheral.setDelegate(AWSIoTNotificationDelegate(self.peripheral_addr))
             self.rxh = peripheral.getCharacteristics(uuid=rxUUID)[0]
             print "Configuring RX to notify me on change"
             peripheral.writeCharacteristic(35, b"\x01\x00", withResponse=True)
@@ -99,7 +99,7 @@ while True:
                     try:
                         p = Peripheral(d)
                         print "Created Peripheral object for device: " + d.addr
-                        p.setDelegate(AWSIoTNotificationDelegate(d.addr, shadow))
+                      #  p.setDelegate(AWSIoTNotificationDelegate(d.addr, shadow))
                     except BTLEException:
                         print BTLEException.message
                         break
