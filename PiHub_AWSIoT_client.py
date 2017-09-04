@@ -27,7 +27,7 @@ from datetime import datetime
 import threading
 import sys
 from AWSIoTNotificationDelegate import AWSIoTNotificationDelegate
-from BluefruitNotificationDelegate import BluefruitNotificationDelegate
+from BluefruitUARTNotificationDelegate import BluefruitUARTNotificationDelegate
 
 
 class BleNotificationThread (threading.Thread):
@@ -77,7 +77,7 @@ scanner = Scanner(0)
 #bleMonitors = {}
 
 # Configure bluetooth notification delegate
-blmNotificationDelegate = BluefruitNotificationDelegate()
+blmNotificationDelegate = BluefruitUARTNotificationDelegate()
 
 # Pass it to the shadow so the deviceShadow can call it
 shadow.registerNotificationDelegate(blmNotificationDelegate)
@@ -100,7 +100,10 @@ while True:
                     try:
                         p = Peripheral(d)
                         print "Created Peripheral object for device: " + d.addr
-                      #  p.setDelegate(AWSIoTNotificationDelegate(d.addr, shadow))
+                        print "Appending " + d.addr + " to list of connected devices"
+                        # Note I'm forcing a change to BluefruitUARTNotificationDelegate to deal with Peripherals
+                        # instead of BluefruitMonitors
+                        blmNotificationDelegate.peripherals.append(p)
                     except BTLEException:
                         print BTLEException.message
                         break
@@ -122,7 +125,7 @@ while True:
 #             if(blm is None):
 #                 print(str(datetime.now()) + " Failed to connect to device. Will try again")
 #                 continue
-#             blmNotificationDelegate.bleDevices.append(blm)
+#             blmNotificationDelegate.peripherals.append(blm)
 #             bleMonitors[k] = blm
 #             print "Starting thread for device: " + blm.addr
 #             if blm.start() == 0:

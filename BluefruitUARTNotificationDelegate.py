@@ -5,11 +5,14 @@ import binascii
 from bluepy.btle import BTLEException
 from datetime import datetime
 
-class BluefruitNotificationDelegate(NotificationDelegate):
+class BluefruitUARTNotificationDelegate(NotificationDelegate):
+
+    # This class writes to UART.TX characteristic
+    txUUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e"
 
     def __init__(self):
         # Initialize a list of devices
-        self.bleDevices = []
+        self.peripherals = []
 
     def notify(self, data):
         print(str(datetime.now()) + " Received a call to update Bluefruit!")
@@ -21,9 +24,9 @@ class BluefruitNotificationDelegate(NotificationDelegate):
         # Get the list of device states to modify
         states = payloadDict["state"]["ble_devices"]
         print(str(datetime.now()) + " Writing the payload to TX for all devices:")
-        for blm in self.bleDevices:
+        for p in self.peripherals:
             for s in states:
-                if blm.addr == s["MAC"]:
+                if p.addr == s["MAC"]:
                     print(str(datetime.now()) + " Send color to device: " + s["color"])
                     colorString = s["color"]
                     # BluePy write expects a string that it will turn into hex.
@@ -32,14 +35,19 @@ class BluefruitNotificationDelegate(NotificationDelegate):
                     #  See https://github.com/IanHarvey/bluepy/issues/20
                     print 'New color: ' + colorString
                     try:
-                        blm.txCharacteristic.write( binascii.unhexlify(colorString), True )
+                        #blm.txCharacteristic.write( binascii.unhexlify(colorString), True )
+                        # The TX characteristic will be same for all Peripherals (at least i think so...YMMV)
+                        tx = p.getCharacteristics(uuid=self.txUUID)[0]
+                        tx.write( binascii.unhexlify(colorString), True )
                         print(str(datetime.now()) + " New color sent to device: " + s["MAC"])
                     except BTLEException as e:
                         print(str(datetime.now()) + " BTLEException: " + e.message)
                         print(str(datetime.now()) + " Will try to reconnect...")
                         try:
-                            blm.reconnect()
-                            blm.txCharacteristic.write(binascii.unhexlify(colorString), True)
+                            p.reconnect()
+#                            p.txCharacteristic.write(binascii.unhexlify(colorString), True)
+                            tx = p.getCharacteristics(uuid=self.txUUID)[0]
+                            tx.write( binascii.unhexlify(colorString), True )
                             print(str(datetime.now()) + " Reconnect successful!")
                             print(str(datetime.now()) + " New color sent to device: " + s["MAC"])
                         except BTLEException as e2:
