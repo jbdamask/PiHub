@@ -45,8 +45,9 @@ class BleNotificationThread (threading.Thread):
         try:
             peripheral.setDelegate(AWSIoTNotificationDelegate(self.peripheral_addr, self.shadow))
             self.rxh = peripheral.getCharacteristics(uuid=self.rxUUID)[0]
-            print "Configuring RX to notify me on change"
+            print " Configuring RX to notify me on change"
             peripheral.writeCharacteristic(35, b"\x01\x00", withResponse=True)
+            print " Subscribed..."
             while True:
                 if peripheral.waitForNotifications(1):
                     pass
@@ -85,7 +86,7 @@ shadow.registerNotificationDelegate(blmNotificationDelegate)
 
 while True:
     print str(peripherals.__len__()) + " connected devices"
-    print 'Scanning...'
+    #print 'Scanning...'
     devices = scanner.scan(2)
     for d in devices:
         try:
@@ -99,7 +100,8 @@ while True:
             for (adtype, desc, value) in d.getScanData():
                 if value in _deviceNamesToFind.keys():
                     try:
-                        p = Peripheral(d)
+                        #p = Peripheral(d)
+                        p = Peripheral(d.addr, "random")
                         print "Created Peripheral object for device: " + d.addr
                         print "Appending " + d.addr + " to list of connected devices"
                         # Note I'm forcing a change to BluefruitUARTNotificationDelegate to deal with Peripherals
