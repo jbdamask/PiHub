@@ -27,6 +27,7 @@ class BluefruitUARTNotificationDelegate(NotificationDelegate):
         for p in self.peripherals:
             print " Writing to peripheral with addr: " + p.addr
             for s in states:
+                print " state.ble_devices " + s
                 if p.addr == s["MAC"]:
                     print(str(datetime.now()) + " Send color to device: " + s["color"])
                     colorString = s["color"]

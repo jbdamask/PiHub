@@ -105,6 +105,8 @@ while True:
                         # Note I'm forcing a change to BluefruitUARTNotificationDelegate to deal with Peripherals
                         # instead of BluefruitMonitors
                         blmNotificationDelegate.peripherals.append(p)
+                        # Register with AWS handler class, too, so all devices get updated
+                        shadow.registerDeviceAddress(p.addr)
                     except BTLEException:
                         print BTLEException.message
                         break
