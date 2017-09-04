@@ -75,7 +75,6 @@ class BluefruitMonitor(threading.Thread):
             print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e.message)
             return 0
 
-
         self.txCharacteristic = self.p.getCharacteristics(uuid=self.txUUID)[0]
         print("RX handle: " + str(self.rxh.getHandle()))
         # Note setDelegate method has been replaced by withDelegate. Change this

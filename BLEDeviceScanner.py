@@ -18,7 +18,6 @@ Todo:
     * Externalize device type so we can search for different stuff
 
 """
-
 from bluepy.btle import Scanner, BTLEException
 import threading
 import time
@@ -40,7 +39,7 @@ class DeviceScanner(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
-        self.scanner = Scanner(0)
+        self.scanner = Scanner(0).withDelegate(ScanDelegate())
         self.daemon = True
 
     def run(self):
@@ -84,3 +83,5 @@ class DeviceScanner(threading.Thread):
     def removeDevice(self, devId):
         with self.lock:
             del self._registeredDevices[devId]
+
+

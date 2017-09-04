@@ -1,3 +1,7 @@
+# DEPRECATED
+# This class was never used anyway. Blow it away in next push
+# September 2017 - JBD
+
 from BluefruitNotificationDelegate import BluefruitNotificationDelegate
 from AWSIoTNotificationDelegate import AWSIoTNotificationDelegate
 
