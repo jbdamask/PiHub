@@ -41,7 +41,8 @@ class BleNotificationThread (threading.Thread):
         self.shadow = deviceShadow
 
     def run(self):
-        peripheral = peripherals[self.peripheral_addr]
+        with lock:
+            peripheral = peripherals[self.peripheral_addr]
         try:
             peripheral.setDelegate(AWSIoTNotificationDelegate(self.peripheral_addr, self.shadow))
             self.rxh = peripheral.getCharacteristics(uuid=self.rxUUID)[0]
@@ -69,6 +70,7 @@ shadow = AWSIoTMQTTShadowClientGenerator("a2i4zihblrm3ge.iot.us-east-1.amazonaws
 _deviceNamesToFind = { "Adafruit Bluefruit LE": "" }
 peripherals = {}
 scanner = Scanner(0)
+lock = threading.RLock()
 
 # Device scanner object for its own thread
 #deviceScanner = DeviceScanner()
@@ -116,7 +118,8 @@ while True:
                     except Exception:
                         print "Unknown Exception"
                         print Exception.message
-                    peripherals[d.addr] = p
+                    with lock:
+                        peripherals[d.addr] = p
                     t = BleNotificationThread(d.addr, shadow)
                     t.start()
         except:
