@@ -49,9 +49,9 @@ class BleNotificationThread (threading.Thread):
             print " Configuring RX to notify me on change"
             peripheral.writeCharacteristic(35, b"\x01\x00", withResponse=True)
             print " Subscribed..."
-            while True:
-                if peripheral.waitForNotifications(1):
-                    pass
+            ##while True:
+            ##    if peripheral.waitForNotifications(1):
+            ##        pass
         except BTLEException:
             print BTLEException.message
         except BaseException:

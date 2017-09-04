@@ -56,10 +56,10 @@ class BluefruitUARTNotificationDelegate(NotificationDelegate):
                             print(str(datetime.now()) + " Reconnect failed. Sorry")
                         except:
                             e2 = e = sys.exc_info()[0]
-                            print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
+                            print(str(datetime.now()) + " BluefruitUARTNotificationDelegate Error on call to TX: %s" % e)
                     except:
                         e = sys.exc_info()[0]
-                        print(str(datetime.now()) + " BluefruitMonitor Error on call to TX: %s" % e)
+                        print(str(datetime.now()) + " BluefruitUARTNotificationDelegate Error on call to TX: %s" % e)
                         try:
                             self.p.disconnect()
                         except:
