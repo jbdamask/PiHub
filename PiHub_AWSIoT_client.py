@@ -113,12 +113,13 @@ while True:
                         print BTLEException.message
                         break
                     except Exception:
-                        print "Unknown error"
+                        print "Unknown Exception"
                         print Exception.message
                     peripherals[d.addr] = p
                     t = BleNotificationThread(d.addr, shadow)
                     t.start()
         except:
+            print "Unknown error"
             print sys.exc_info()[0]
 
 # Loop forever
