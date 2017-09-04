@@ -112,6 +112,9 @@ while True:
                     except BTLEException:
                         print BTLEException.message
                         break
+                    except Exception:
+                        print "Unknown error"
+                        print Exception.message
                     peripherals[d.addr] = p
                     t = BleNotificationThread(d.addr, shadow)
                     t.start()
