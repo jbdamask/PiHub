@@ -102,13 +102,14 @@ while True:
                     try:
                         #p = Peripheral(d)
                         p = Peripheral(d.addr, "random")
-                        print "Created Peripheral object for device: " + d.addr
-                        print "Appending " + d.addr + " to list of connected devices"
+                        print " Created Peripheral object for device: " + d.addr
+                        print " Appending " + d.addr + " to list of connected devices"
                         # Note I'm forcing a change to BluefruitUARTNotificationDelegate to deal with Peripherals
                         # instead of BluefruitMonitors
                         blmNotificationDelegate.peripherals.append(p)
                         # Register with AWS handler class, too, so all devices get updated
                         shadow.registerDeviceAddress(p.addr)
+                        print " Device registered. Moving on"
                     except BTLEException:
                         print BTLEException.message
                         break
