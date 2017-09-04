@@ -25,6 +25,7 @@ class BluefruitUARTNotificationDelegate(NotificationDelegate):
         states = payloadDict["state"]["ble_devices"]
         print(str(datetime.now()) + " Writing the payload to TX for all devices:")
         for p in self.peripherals:
+            print " Writing to peripheral with addr: " + p.addr
             for s in states:
                 if p.addr == s["MAC"]:
                     print(str(datetime.now()) + " Send color to device: " + s["color"])

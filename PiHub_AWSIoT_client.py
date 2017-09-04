@@ -50,9 +50,10 @@ class BleNotificationThread (threading.Thread):
             while True:
                 if peripheral.waitForNotifications(1):
                     pass
-
         except BTLEException:
             print BTLEException.message
+        except BaseException:
+            print BaseException.message
 
 
 shadow = AWSIoTMQTTShadowClientGenerator("a2i4zihblrm3ge.iot.us-east-1.amazonaws.com",
