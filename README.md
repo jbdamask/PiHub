@@ -1,3 +1,6 @@
+# Repo Deprecated
+This was an early attempt to get Pi's talking. Quite wrong but good exercise. Replaced by [PiHubBleAwsIoT](https://github.com/jbdamask/PiHubBleAwsIoT)
+
 # Notice
 This stuff all kinda works. Very fickle. It is currently limited to a single device shadow with multiple local BLEs
 
